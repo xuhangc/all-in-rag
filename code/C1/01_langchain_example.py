@@ -53,7 +53,7 @@ prompt = ChatPromptTemplate.from_template("""请根据下面提供的上下文�
 #     max_tokens=2048,
 #     api_key=os.getenv("DEEPSEEK_API_KEY")
 # )
-model = ChatOpenAI(
+llm = ChatOpenAI(
     base_url="https://www.dmxapi.cn/v1/",  # or "https://www.dmxapi.cn/v1"
     api_key=os.getenv("DMX_API_KEY"),
     model="Qwen3-8B",  # or other free models available on dmxapi
