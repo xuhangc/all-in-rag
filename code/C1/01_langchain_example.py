@@ -7,7 +7,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_deepseek import ChatDeepSeek
+from langchain_openai import ChatOpenAI
+
 
 load_dotenv()
 
@@ -46,11 +47,17 @@ prompt = ChatPromptTemplate.from_template("""请根据下面提供的上下文�
                                           )
 
 # 配置大语言模型
-llm = ChatDeepSeek(
-    model="deepseek-chat",
-    temperature=0.7,
-    max_tokens=2048,
-    api_key=os.getenv("DEEPSEEK_API_KEY")
+# llm = ChatDeepSeek(
+#     model="deepseek-chat",
+#     temperature=0.7,
+#     max_tokens=2048,
+#     api_key=os.getenv("DEEPSEEK_API_KEY")
+# )
+model = ChatOpenAI(
+    base_url="https://www.dmxapi.cn/v1/",  # or "https://www.dmxapi.cn/v1"
+    api_key=os.getenv("DMX_API_KEY"),
+    model="Qwen3-8B",  # or other free models available on dmxapi
+    temperature=0.7
 )
 
 # 用户查询
