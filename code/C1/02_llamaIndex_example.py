@@ -9,7 +9,7 @@ load_dotenv()
 
 Settings.llm = OpenAILike(
     model="Qwen3-8B",
-    api_base="https://api.dmxapi.com/v1",  # 您的 API 端点
+    api_base="https://www.dmxapi.cn/v1/",  # 您的 API 端点
     api_key=os.getenv("DMX_API_KEY")
 )
 Settings.embed_model = HuggingFaceEmbedding("BAAI/bge-small-zh-v1.5")
