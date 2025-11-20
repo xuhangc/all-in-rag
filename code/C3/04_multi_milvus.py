@@ -66,7 +66,8 @@ def visualize_results(query_image_path: str, retrieved_images: list, img_height:
 # 3. 初始化客户端
 print("--> 正在初始化编码器和Milvus客户端...")
 encoder = Encoder(MODEL_NAME, MODEL_PATH)
-milvus_client = MilvusClient(uri=MILVUS_URI)
+# milvus_client = MilvusClient(uri=MILVUS_URI)
+milvus_client = MilvusClient(uri="./milvus_demo.db")
 
 # 4. 创建 Milvus Collection
 print(f"\n--> 正在创建 Collection '{COLLECTION_NAME}'")
@@ -110,11 +111,17 @@ if data_to_insert:
 # 6. 创建索引
 print(f"\n--> 正在为 '{COLLECTION_NAME}' 创建索引")
 index_params = milvus_client.prepare_index_params()
+# index_params.add_index(
+#     field_name="vector",
+#     index_type="HNSW",
+#     metric_type="COSINE",
+#     params={"M": 16, "efConstruction": 256}
+# )
 index_params.add_index(
     field_name="vector",
-    index_type="HNSW",
+    index_type="AUTOINDEX",  # <--- The fix
     metric_type="COSINE",
-    params={"M": 16, "efConstruction": 256}
+    params={}                # AUTOINDEX doesn't need complex params
 )
 milvus_client.create_index(collection_name=COLLECTION_NAME, index_params=index_params)
 print("成功为向量字段创建 HNSW 索引。")
